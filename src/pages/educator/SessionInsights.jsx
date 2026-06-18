@@ -230,10 +230,10 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
   }[analysisStatus];
 
   return (
-    <div style={{ display: 'flex', gap: '20px', height: '100%', minHeight: '80vh' }}>
+    <div className="session-insights-layout" style={{ gap: '20px', height: '100%', minHeight: '80vh' }}>
       
       {/* Left Panel: Session Selection */}
-      <div className="glass-panel" style={{ width: '350px', padding: '24px', borderRadius: '24px', display: 'flex', flexDirection: 'column' }}>
+      <div className="glass-panel session-insights-sidebar" style={{ padding: '24px', borderRadius: '24px', display: 'flex', flexDirection: 'column' }}>
         <h2 style={{ color: 'white', fontSize: '1.2rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Video size={20} color="#6C63FF" /> Select Session
         </h2>

@@ -396,8 +396,21 @@ button, input, select, textarea {
   min-width: 0; /* Prevents grid blowout */
 }
 
+.session-insights-layout {
+  display: flex;
+}
+.session-insights-sidebar {
+  width: 350px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1024px) {
+  .session-insights-layout {
+    flex-direction: column;
+  }
+  .session-insights-sidebar {
+    width: 100%;
+  }
   .grid-sidebar { grid-template-columns: 1fr !important; }
   .grid-5, .grid-footer { grid-template-columns: repeat(3, 1fr); }
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
