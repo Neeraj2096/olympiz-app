@@ -589,7 +589,7 @@ You MUST respond strictly in the following JSON format:
     }}>
 
       {/* ── Sidebar ── */}
-      <div style={{
+      <div className="ask-ai-sidebar" style={{
         background: 'rgba(0,0,0,0.2)',
         borderRight: '1px solid rgba(255,255,255,0.06)',
         padding: '20px',
@@ -625,7 +625,7 @@ You MUST respond strictly in the following JSON format:
         </div>
 
         {/* Past Doubts */}
-        <div style={{ marginTop: '8px' }}>
+        <div className="ask-ai-quick-doubts" style={{ marginTop: '8px' }}>
           <h5 style={{ color: '#626280', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>
             Quick Doubts
           </h5>
