@@ -731,11 +731,11 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
                 <thead>
                   <tr style={{ color: '#626280', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '8px', textAlign: 'left' }}>
-                    <th style={{ padding: '10px' }}>Assignment Name</th>
-                    <th>Submissions</th>
-                    <th>Due Date</th>
-                    <th>AI Grading Status</th>
-                    <th>Actions</th>
+                    <th style={{ padding: '12px 16px' }}>Assignment Name</th>
+                    <th style={{ padding: '12px 16px' }}>Submissions</th>
+                    <th style={{ padding: '12px 16px' }}>Due Date</th>
+                    <th style={{ padding: '12px 16px' }}>AI Grading Status</th>
+                    <th style={{ padding: '12px 16px' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -744,11 +744,11 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
                     { name: 'Electrostatics Flux Grids', subs: '28/38', due: 'In 2 days', graded: 'Pending submissions', action: true }
                   ].map((ass, i) => (
                     <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-                      <td style={{ padding: '14px 10px', color: 'white' }}>{ass.name}</td>
-                      <td>{ass.subs} completed</td>
-                      <td>{ass.due}</td>
-                      <td style={{ color: ass.graded === 'Completed' ? '#00D4AA' : '#FFB347' }}>{ass.graded}</td>
-                      <td>
+                      <td style={{ padding: '16px', color: 'white' }}>{ass.name}</td>
+                      <td style={{ padding: '16px' }}>{ass.subs} completed</td>
+                      <td style={{ padding: '16px' }}>{ass.due}</td>
+                      <td style={{ padding: '16px', color: ass.graded === 'Completed' ? '#00D4AA' : '#FFB347' }}>{ass.graded}</td>
+                      <td style={{ padding: '16px' }}>
                         {ass.action ? (
                           <button 
                             onClick={() => handleGradeWithAI(ass.name)}
