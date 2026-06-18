@@ -64,14 +64,12 @@ export default function ParentDashboard({
   };
 
   return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: '260px 1fr',
+    <div className="grid-sidebar" style={{
       minHeight: '100vh',
-      background: 'var(--dark-bg)',
+      background: '#0D0D1A',
       color: 'white',
       fontFamily: "'Inter', sans-serif"
-    }} className="dashboard-layout-grid">
+    }}>
 
       {/* Left Sidebar */}
       <aside style={{
@@ -310,7 +308,7 @@ export default function ParentDashboard({
             </div>
 
             {/* Child Snapshots Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px' }} className="catalog-grid-mobile">
+            <div className="grid-5" style={{ gap: '20px' }}>
               {[
                 { id: 'xp', label: "Child's Level & XP", value: `${child.xp} / ${weeklyGoal.xp} XP`, progress: (child.xp / weeklyGoal.xp) * 100, color: '#6C63FF', icon: <Sparkles size={20} style={{ color: '#6C63FF' }} /> },
                 { id: 'hours', label: 'Weekly Study Hours', value: `${child.studyHours} hrs`, progress: 85, color: '#00D4AA', icon: <Clock size={20} style={{ color: '#00D4AA' }} /> },
@@ -359,7 +357,7 @@ export default function ParentDashboard({
             </div>
 
             {/* Performance Overview & Weak Topics Alert */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '24px' }} className="test-grid-mobile">
+            <div className="grid-split-reverse" style={{ gap: '24px' }}>
               
               {/* Analytics preview card */}
               <div className="glass-panel" style={{ padding: '30px', borderRadius: '20px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -435,7 +433,7 @@ export default function ParentDashboard({
             </div>
 
             {/* Parent Intervention / Encouragement Panel */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '24px' }} className="test-grid-mobile">
+            <div className="grid-split-reverse" style={{ gap: '24px' }}>
               
               {/* Send Encouragement Card */}
               <div className="glass-panel" style={{ padding: '24px', borderRadius: '18px' }}>
@@ -573,7 +571,7 @@ export default function ParentDashboard({
             </div>
 
             {/* Visual list grids */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }} className="test-grid-mobile">
+            <div className="grid-2" style={{ gap: '24px' }}>
               
               {/* Upcoming Classes */}
               <div className="glass-panel" style={{ padding: '24px', borderRadius: '18px' }}>

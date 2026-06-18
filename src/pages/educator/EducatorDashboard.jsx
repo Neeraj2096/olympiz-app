@@ -304,14 +304,12 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
   };
 
   return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: '260px 1fr',
+    <div className="grid-sidebar" style={{
       minHeight: '100vh',
       background: '#0D0D1A',
       color: 'white',
       fontFamily: "'Inter', sans-serif"
-    }} className="dashboard-layout-grid">
+    }}>
 
       {/* 1. Left Sidebar */}
       <aside style={{
@@ -526,7 +524,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
           <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
             
             {/* Metric Row */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px' }} className="catalog-grid-mobile">
+            <div className="grid-5" style={{ gap: '20px' }}>
               {[
                 { id: 'students', label: 'Total Students active', value: '38 students', color: '#6C63FF', icon: <Users size={16} /> },
                 { id: 'accuracy', label: 'Avg Class accuracy', value: '74%', color: '#00D4AA', icon: <BarChart3 size={16} /> },
@@ -590,7 +588,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
             </div>
 
             {/* Dual Ranking Card (Toppers vs Needs review) */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }} className="test-grid-mobile">
+            <div className="grid-2" style={{ gap: '24px' }}>
               
               {/* Toppers */}
               <div className="glass-panel" style={{ padding: '24px', borderRadius: '18px' }}>
@@ -831,7 +829,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
             </div>
 
             {/* Layout grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '24px' }} className="test-grid-mobile">
+            <div className="grid-split-reverse" style={{ gap: '24px' }}>
               {/* Upcoming Lectures */}
               <div className="glass-panel" style={{ padding: '24px', borderRadius: '18px' }}>
                 <h3 style={{ color: 'white', fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -982,7 +980,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
                       }}>
                         
                         {/* 1. Root Cause & Diagnosis */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                        <div className="grid-2" style={{ gap: '20px' }}>
                           <div style={{ background: 'rgba(108,99,255,0.05)', border: '1px solid rgba(108,99,255,0.2)', padding: '16px', borderRadius: '12px' }}>
                             <h5 style={{ color: '#6C63FF', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                               <Target size={14} /> AI Diagnosis
@@ -998,7 +996,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
                         </div>
 
                         {/* 2. Sub-Topic Mastery Bars & Student Profile */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '20px', alignItems: 'start' }}>
+                        <div className="grid-1-2" style={{ gap: '20px', alignItems: 'start' }}>
                           {/* Profile Data */}
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                             <div style={{ background: 'rgba(255,255,255,0.03)', padding: '12px', borderRadius: '8px', display: 'flex', gap: '10px', alignItems: 'center' }}>
@@ -1087,7 +1085,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
                       <Calendar size={18} color="#FFB347" /> Curriculum Pacing Optimizer
                     </h3>
                   </div>
-                  <div style={{ padding: '24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                  <div className="grid-2" style={{ padding: '24px', gap: '20px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                        <div style={{ background: 'rgba(108,99,255,0.08)', borderLeft: '3px solid #6C63FF', padding: '16px', borderRadius: '8px' }}>
                         <h4 style={{ color: 'white', fontSize: '0.85rem', marginBottom: '4px' }}>Fast-Track Recommended: Calculus</h4>
@@ -1110,7 +1108,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
                       <Lightbulb size={18} color="#00D4AA" /> Behavioral & Engagement Insights
                     </h3>
                   </div>
-                  <div style={{ padding: '24px', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
+                  <div className="grid-3" style={{ padding: '24px', gap: '16px' }}>
                     {[
                       { icon: <TrendingUp size={20} color="#00D4AA" />, title: "Smart Notes Efficacy", desc: "Students who use the AI Smart Notes feature actively are scoring 14% higher in weekly mock tests." },
                       { icon: <TrendingDown size={20} color="#FF6B6B" />, title: "Weekend Drop-off", desc: "Engagement on the 'Daily Questions' stack drops by 65% on Sundays. Consider gamifying weekend streaks." },
@@ -1193,7 +1191,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
               </div>
 
               {/* Live doubt indicators */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginTop: '20px' }}>
+              <div className="grid-3" style={{ gap: '16px', marginTop: '20px' }}>
                 <div style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
                   <span style={{ fontSize: '0.72rem', color: '#A0A0C0', display: 'block', marginBottom: '4px' }}>Active Batch Doubts</span>
                   <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'white' }}>{studentDoubts.length + compiledDoubts.length} Doubts</span>
@@ -1219,7 +1217,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
                   {doubtReport.overview}
                 </p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }} className="test-grid-mobile">
+                <div className="grid-2" style={{ gap: '20px', marginBottom: '24px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     <h4 style={{ fontSize: '0.9rem', color: 'white', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '8px' }}>Core Misconceptions Detected</h4>
                     {doubtReport.struggles.map((st, idx) => (
@@ -1251,7 +1249,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
             )}
 
             {/* Split layout: student doubts feed & struggle heatmap */}
-            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }} className="cbt-workspace-flex">
+            <div className="grid-2-1" style={{ gap: '24px' }}>
               
               {/* Student doubts feed */}
               <div className="glass-panel" style={{ padding: '24px', borderRadius: '18px' }}>

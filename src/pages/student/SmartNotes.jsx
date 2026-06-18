@@ -408,7 +408,7 @@ export default function SmartNotes({ notesList, addNote, deleteNote, earnXP, act
           </div>
 
           {/* Notes Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }} className="test-grid-mobile">
+          <div className="grid-3" style={{ gap: '20px' }}>
             {notesList.filter(n => {
               const matchesSearch = n.title.toLowerCase().includes(searchQuery.toLowerCase());
               const matchesFilter = activeFilter === 'All' || n.type === activeFilter;
@@ -469,11 +469,9 @@ export default function SmartNotes({ notesList, addNote, deleteNote, earnXP, act
             </button>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 280px',
-            gap: '20px'
-          }} className="cbt-workspace-flex">
+          <div className="grid-main-sidebar" style={{
+            gap: '24px',
+          }}>
             
             {/* Editor Workspace */}
             <div className="glass-panel" style={{ padding: '30px', borderRadius: '20px' }}>
@@ -769,7 +767,7 @@ export default function SmartNotes({ notesList, addNote, deleteNote, earnXP, act
                         <p style={{ fontSize: '0.85rem', color: 'white', fontWeight: '500', marginBottom: '10px' }}>
                           {qIndex + 1}. {q.q}
                         </p>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                        <div className="grid-2" style={{ gap: '8px' }}>
                           {q.opts.map((opt, oIndex) => {
                             const selected = userChoice === oIndex;
                             const isThisCorrect = oIndex === q.correct;

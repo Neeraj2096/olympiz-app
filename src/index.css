@@ -328,6 +328,52 @@ button, input, select, textarea {
   }
 }
 
+/* Responsive Grid Utility Classes */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.grid-split { display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; }
+.grid-split-reverse { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; }
+.grid-1-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
+.grid-2-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+.grid-sidebar { display: grid; grid-template-columns: 260px 1fr; gap: 0; min-height: calc(100vh - 76px); }
+.grid-main-sidebar { display: grid; grid-template-columns: 1fr 280px; gap: 24px; }
+.grid-footer { display: grid; grid-template-columns: 2fr repeat(4, 1fr); gap: 40px; }
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .grid-5, .grid-footer { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-split, .grid-split-reverse { gap: 16px; }
+}
+
+@media (max-width: 768px) {
+  /* Collapse all grids to 1 column on mobile */
+  .grid-2, .grid-3, .grid-4, .grid-5, .grid-split, .grid-split-reverse, .grid-footer, .grid-1-2, .grid-2-1, .grid-main-sidebar {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  
+  /* Sidebar layout collapses, sidebar hides or stacks */
+  .grid-sidebar {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Mobile padding adjustments */
+  .grid-container {
+    padding: 0 16px !important;
+  }
+
+  /* Utility visibility classes */
+  .hidden-sm { display: none !important; }
+  .visible-sm { display: block !important; }
+  .flex-visible-sm { display: flex !important; }
+}
+
+/* By default, hide mobile-only elements on desktop */
+.visible-sm, .flex-visible-sm { display: none; }
+
 /* Shimmer Effect */
 .shimmer {
   position: relative;

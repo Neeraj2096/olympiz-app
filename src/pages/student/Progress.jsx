@@ -53,11 +53,9 @@ export default function Progress({ user, testHistory, weakTopics, activeCourse =
       
       {/* 1. Header Overview Stats Hero */}
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
         gap: '20px',
-        marginBottom: '30px'
-      }} className="catalog-grid-mobile">
+        marginBottom: '40px'
+      }} className="grid-4">
         {[
           { label: "Overall progress", value: "81%", desc: "Chapter mastery avg" },
           { label: "Hours studied", value: `${user.studyHours * 12} hrs`, desc: "This month total" },
@@ -74,11 +72,9 @@ export default function Progress({ user, testHistory, weakTopics, activeCourse =
 
       {/* Main progress graphs grids */}
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1.2fr 1fr',
-        gap: '25px',
-        marginBottom: '30px'
-      }} className="test-grid-mobile">
+        gap: '24px',
+        marginBottom: '40px'
+      }} className="grid-split-reverse">
         
         {/* Left: Line Graph + Heatmap */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
@@ -144,7 +140,7 @@ export default function Progress({ user, testHistory, weakTopics, activeCourse =
           <div className="glass-panel" style={{ padding: '30px', borderRadius: '20px' }}>
             <h3 style={{ color: 'white', fontSize: '1.05rem', fontWeight: 'bold', marginBottom: '20px' }}>Chapter mastery heatmap</h3>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }} className="catalog-grid-mobile">
+            <div className="grid-4" style={{ gap: '12px' }}>
               {heatmapData.map((cell, idx) => (
                 <div 
                   key={idx} 
@@ -172,7 +168,7 @@ export default function Progress({ user, testHistory, weakTopics, activeCourse =
           <div className="glass-panel" style={{ padding: '30px', borderRadius: '20px' }}>
             <h3 style={{ color: 'white', fontSize: '1.05rem', fontWeight: 'bold', marginBottom: '20px' }}>Syllabus indicators</h3>
             
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="grid-2" style={{ gap: '20px' }}>
               {subjectScores.map((sub, i) => (
                 <div key={i} style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                   <div style={{ position: 'relative', width: '70px', height: '70px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

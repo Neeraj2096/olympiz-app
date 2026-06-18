@@ -580,9 +580,7 @@ You MUST respond strictly in the following JSON format:
   };
 
   return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: '260px 1fr',
+    <div className="grid-sidebar" style={{
       height: 'calc(100vh - 120px)',
       background: 'var(--card-bg)',
       border: '1px solid rgba(255,255,255,0.06)',

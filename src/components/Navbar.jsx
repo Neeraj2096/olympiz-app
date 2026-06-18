@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Flame } from 'lucide-react';
+import { Flame, Menu, X } from 'lucide-react';
 
 export default function Navbar({ currentPage, navigate, isAuthenticated, user, logout }) {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,7 +94,7 @@ export default function Navbar({ currentPage, navigate, isAuthenticated, user, l
           display: 'flex',
           alignItems: 'center',
           gap: '32px',
-        }} className="nav-links-desktop">
+        }} className="hidden-sm">
           <span onClick={() => handleNavClick('#features')} style={{ color: '#A0A0C0', fontWeight: '500', fontSize: '0.95rem', cursor: 'pointer', transition: 'color 0.2s' }}>Features</span>
           <span onClick={() => handleNavClick('#how-it-works')} style={{ color: '#A0A0C0', fontWeight: '500', fontSize: '0.95rem', cursor: 'pointer', transition: 'color 0.2s' }}>How it Works</span>
           <span onClick={() => handleNavClick('#educators')} style={{ color: '#A0A0C0', fontWeight: '500', fontSize: '0.95rem', cursor: 'pointer', transition: 'color 0.2s' }}>For Educators</span>
@@ -107,7 +108,7 @@ export default function Navbar({ currentPage, navigate, isAuthenticated, user, l
           display: 'flex',
           alignItems: 'center',
           gap: '24px',
-        }}>
+        }} className="hidden-sm">
           <button 
             onClick={() => {
               if (user.role === 'student') navigate('dashboard-student');
@@ -127,7 +128,7 @@ export default function Navbar({ currentPage, navigate, isAuthenticated, user, l
         display: 'flex',
         alignItems: 'center',
         gap: '16px'
-      }}>
+      }} className="hidden-sm">
         {isAuthenticated ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             {user.role === 'student' && (
@@ -197,6 +198,74 @@ export default function Navbar({ currentPage, navigate, isAuthenticated, user, l
           </>
         )}
       </div>
+
+      {/* Mobile Menu Toggle */}
+      <div className="flex-visible-sm" style={{ display: 'none', alignItems: 'center', cursor: 'pointer' }} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        {mobileMenuOpen ? <X size={24} color="#FFFFFF" /> : <Menu size={24} color="#FFFFFF" />}
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div style={{
+          position: 'fixed',
+          top: '76px',
+          left: 0,
+          right: 0,
+          background: 'rgba(13, 13, 26, 0.98)',
+          backdropFilter: 'blur(20px)',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          padding: '24px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
+          zIndex: 999,
+          boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
+        }}>
+          {!isAuthenticated && (
+            <>
+              <span onClick={() => { handleNavClick('#features'); setMobileMenuOpen(false); }} style={{ color: '#FFFFFF', fontSize: '1.1rem', fontWeight: '500' }}>Features</span>
+              <span onClick={() => { handleNavClick('#how-it-works'); setMobileMenuOpen(false); }} style={{ color: '#FFFFFF', fontSize: '1.1rem', fontWeight: '500' }}>How it Works</span>
+              <span onClick={() => { handleNavClick('#educators'); setMobileMenuOpen(false); }} style={{ color: '#FFFFFF', fontSize: '1.1rem', fontWeight: '500' }}>For Educators</span>
+              <span onClick={() => { handleNavClick('#pricing'); setMobileMenuOpen(false); }} style={{ color: '#FFFFFF', fontSize: '1.1rem', fontWeight: '500' }}>Pricing</span>
+              <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', margin: '8px 0' }}></div>
+              <button onClick={() => { navigate('signup'); setMobileMenuOpen(false); }} className="btn btn-secondary">Log In</button>
+              <button onClick={() => { navigate('signup'); setMobileMenuOpen(false); }} className="btn btn-primary btn-glow">Start Free</button>
+            </>
+          )}
+
+          {isAuthenticated && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                <div style={{
+                  width: '40px', height: '40px', borderRadius: '50%', background: user.role === 'student' ? 'var(--primary-color)' : 'var(--secondary-color)',
+                  color: '#0D0D1A', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem'
+                }}>
+                  {user.name ? user.name[0].toUpperCase() : 'U'}
+                </div>
+                <div>
+                  <div style={{ color: 'white', fontWeight: '600' }}>{user.name}</div>
+                  <div style={{ color: '#A0A0C0', fontSize: '0.85rem', textTransform: 'capitalize' }}>{user.role}</div>
+                </div>
+              </div>
+              
+              <button 
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (user.role === 'student') navigate('dashboard-student');
+                  else if (user.role === 'parent') navigate('dashboard-parent');
+                  else navigate('dashboard-educator');
+                }}
+                className="btn btn-primary"
+              >
+                Go to Workspace
+              </button>
+              <button onClick={() => { logout(); setMobileMenuOpen(false); }} className="btn btn-secondary">
+                Log Out
+              </button>
+            </>
+          )}
+        </div>
+      )}
     </nav>
   );
 }

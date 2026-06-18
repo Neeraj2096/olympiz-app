@@ -66,14 +66,12 @@ export default function StudentDashboard({
   });
 
   return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: '260px 1fr',
+    <div className="grid-sidebar" style={{
       minHeight: '100vh',
-      background: 'var(--dark-bg)',
+      background: '#0D0D1A',
       color: 'white',
       fontFamily: "'Inter', sans-serif"
-    }} className="dashboard-layout-grid">
+    }}>
 
       {/* 1. Left Sidebar */}
       <aside style={{
@@ -364,7 +362,7 @@ export default function StudentDashboard({
           <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }} className="fade-in">
             
             {/* Stats metric Cards Row */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px' }} className="catalog-grid-mobile">
+            <div className="grid-5" style={{ gap: '20px' }}>
               {[
                 { id: 'accuracy', label: 'Overall score accuracy', value: '81%', color: '#6C63FF', icon: '🎯' },
                 { id: 'streak', label: 'Day Streak count', value: `${user.streak} Days`, color: '#FFB347', icon: '🔥' },
@@ -404,7 +402,7 @@ export default function StudentDashboard({
             </div>
 
             {/* Row 2: Today's Daily + Chapters Progress heatmaps */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '24px' }} className="test-grid-mobile">
+            <div className="grid-split-reverse" style={{ gap: '24px' }}>
               
               {/* Daily questions widget preview */}
               <div 
@@ -481,7 +479,7 @@ export default function StudentDashboard({
             </div>
 
             {/* Row 3: Upcoming classes + tests list + recent AI chats previews */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1.2fr', gap: '24px' }} className="test-grid-mobile">
+            <div className="grid-3" style={{ gap: '24px' }}>
               
               {/* Upcoming Live Classes */}
               <div className="glass-panel" style={{ padding: '24px', borderRadius: '18px', borderLeft: '3px solid #00D4AA' }}>

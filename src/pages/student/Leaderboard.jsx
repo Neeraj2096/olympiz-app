@@ -52,15 +52,10 @@ export default function Leaderboard({ user, activeCourse = 'JEE Main' }) {
       </div>
 
       {/* Podium Top 3 visual layout */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
+      <div className="grid-3" style={{
         gap: '20px',
-        alignItems: 'end',
-        maxWidth: '680px',
-        margin: '0 auto 40px',
-        textAlign: 'center'
-      }} className="catalog-grid-mobile">
+        marginBottom: '40px'
+      }}>
         
         {/* Rank 2 */}
         <div className="glass-panel" style={{ padding: '24px', borderRadius: '16px', height: '180px', display: 'flex', flexDirection: 'column', justify: 'center', alignItems: 'center', gap: '10px' }}>
@@ -155,11 +150,7 @@ export default function Leaderboard({ user, activeCourse = 'JEE Main' }) {
       {/* Achievements Badges grid */}
       <div className="glass-panel" style={{ padding: '30px', borderRadius: '18px' }}>
         <h3 style={{ color: 'white', fontSize: '1.05rem', fontWeight: 'bold', marginBottom: '20px' }}>Your Achievements</h3>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
-          gap: '16px'
-        }} className="catalog-grid-mobile">
+        <div className="grid-5" style={{ gap: '16px' }}>
           {[
             { label: 'First Test', icon: '📝', unlocked: true },
             { label: '7-Day Streak', icon: '🔥', unlocked: true },

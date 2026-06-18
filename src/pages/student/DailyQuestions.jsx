@@ -580,7 +580,7 @@ export default function DailyQuestions({ user, earnXP, deductXP, navigate, activ
               </h3>
 
               {/* Subject Breakdown */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '30px' }} className="catalog-grid-mobile">
+              <div className="grid-4" style={{ gap: '16px', marginBottom: '30px' }}>
                 {Object.keys(subjectStats).map(sub => {
                   const data = subjectStats[sub];
                   const pct = data.tot > 0 ? Math.round((data.cor / data.tot) * 100) : 0;

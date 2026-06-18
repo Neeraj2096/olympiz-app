@@ -13,11 +13,9 @@ export default function Footer({ navigate }) {
       <div style={{
         maxWidth: '1280px',
         margin: '0 auto',
-        display: 'grid',
-        gridTemplateColumns: '2fr repeat(4, 1fr)',
         gap: '40px',
         marginBottom: '60px'
-      }} className="footer-grid-desktop">
+      }} className="grid-footer">
         {/* Column 1 - Brand */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div 

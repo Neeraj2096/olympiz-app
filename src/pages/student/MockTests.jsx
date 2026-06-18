@@ -203,7 +203,7 @@ function ExamPortal({ selectedTest, examQuestions, onClose, onSubmit }) {
               </p>
 
               {/* Score stats row */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+              <div className="grid-4" style={{ gap: '10px' }}>
                 {[
                   { label: 'Score', val: `${resultData.score}/${totalMarks}`, color: '#6C63FF' },
                   { label: 'Correct', val: resultData.correct, color: '#00D4AA' },
@@ -248,7 +248,7 @@ function ExamPortal({ selectedTest, examQuestions, onClose, onSubmit }) {
           </div>
 
           {/* ═══════════ PERFORMANCE METRICS ═══════════ */}
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
+          <div className="grid-3" style={{ marginBottom: '24px' }}>
             {[
               { icon: '⚡', label: 'Avg. Time / Question', value: `${avgTimePerQ}s`, sub: avgTimePerQ <= 90 ? 'Within target' : 'Above 90s target', subColor: avgTimePerQ <= 90 ? '#00D4AA' : '#FF6B6B' },
               { icon: '🎯', label: 'Attempt Rate', value: `${Math.round(((resultData.correct + resultData.incorrect) / examQuestions.length) * 100)}%`, sub: `${resultData.correct + resultData.incorrect} of ${examQuestions.length} attempted`, subColor: '#A0A0C0' },
@@ -266,7 +266,7 @@ function ExamPortal({ selectedTest, examQuestions, onClose, onSubmit }) {
           </div>
 
           {/* ═══════════ TOPIC-WISE ANALYSIS ═══════════ */}
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
+          <div className="grid-2" style={{ marginBottom: '24px' }}>
             {/* Strength & Weakness */}
             <div style={rs.sectionCard}>
               <h4 style={rs.sectionTitle}>
@@ -426,7 +426,7 @@ function ExamPortal({ selectedTest, examQuestions, onClose, onSubmit }) {
               <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', borderRadius: '8px', background: 'rgba(108,99,255,0.15)', fontSize: '0.9rem' }}>💡</span>
               AI Recommendations
             </h4>
-            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '12px' }}>
+            <div className="grid-2" style={{ gap: '12px' }}>
               {recommendations.map((rec, i) => (
                 <div key={i} style={{ padding: '16px', borderRadius: '12px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
                   <span style={{ fontSize: '1.4rem', flexShrink: 0 }}>{rec.icon}</span>
@@ -482,7 +482,7 @@ function ExamPortal({ selectedTest, examQuestions, onClose, onSubmit }) {
                     </p>
 
                     {/* Options */}
-                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '6px', marginBottom: isCorrect ? '0' : '12px' }}>
+                    <div className="grid-2" style={{ gap: '6px', marginBottom: isCorrect ? '0' : '12px' }}>
                       {q.opts.map((opt, oi) => {
                         const isThisCorrect = oi === q.correct;
                         const isUserChoice = oi === userAns;
@@ -668,7 +668,7 @@ function ExamPortal({ selectedTest, examQuestions, onClose, onSubmit }) {
         }}>
           <h4 style={{ color: 'white', fontSize: '0.85rem', fontWeight: 'bold' }}>Question Palette</h4>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px' }}>
+          <div className="grid-5" style={{ gap: '8px' }}>
             {examQuestions.map((_, idx) => {
               const answered = answers[idx] !== undefined;
               const marked = markedForReview[idx];

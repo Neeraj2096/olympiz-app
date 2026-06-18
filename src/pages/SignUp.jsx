@@ -88,13 +88,11 @@ export default function SignUp({ navigate, loginUser }) {
 
   return (
     <div style={{
-      display: 'grid',
-      gridTemplateColumns: '1fr 1.2fr',
       minHeight: 'calc(100vh - 76px)',
       position: 'relative',
       zIndex: 5,
       fontFamily: "'Inter', sans-serif"
-    }} className="signup-grid-desktop">
+    }} className="grid-split">
 
       {/* Left Panel: Highlights */}
       <div style={{
@@ -300,7 +298,7 @@ export default function SignUp({ navigate, loginUser }) {
             {/* 5. Role Selector */}
             <div className="form-group">
               <label>I am a</label>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+              <div className="grid-3" style={{ gap: '10px' }}>
                 {[
                   { value: 'student', label: 'Student', icon: '🎓' },
                   { value: 'educator', label: 'Educator', icon: '🏫' },
@@ -510,7 +508,7 @@ export default function SignUp({ navigate, loginUser }) {
           </div>
 
           {/* OAuth options */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+          <div className="grid-2" style={{ gap: '12px' }}>
             <button 
               onClick={() => {
                 loginUser({ name: 'Arjun Kumar', role: 'student', streak: 14, xp: 450 });

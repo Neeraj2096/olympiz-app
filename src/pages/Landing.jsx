@@ -46,14 +46,11 @@ export default function Landing({ navigate }) {
       {/* 1. Hero Section */}
       <section style={{
         padding: '120px 5vw 80px',
-        display: 'grid',
-        gridTemplateColumns: '1.2fr 1fr',
-        gap: '40px',
         maxWidth: '1280px',
         margin: '0 auto',
         minHeight: '85vh',
         alignItems: 'center'
-      }} className="hero-grid-desktop">
+      }} className="grid-split-reverse">
         
         {/* Hero Left Content */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
@@ -197,7 +194,7 @@ export default function Landing({ navigate }) {
             </div>
 
             {/* Metric Row */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '12px' }}>
+            <div className="grid-split" style={{ gap: '12px' }}>
               {/* Progress Ring card */}
               <div className="glass-panel" style={{ padding: '14px', borderRadius: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
                 <div style={{ position: 'relative', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -319,15 +316,13 @@ export default function Landing({ navigate }) {
         <div className="bento-grid">
           
           {/* F1: Ask AI Bento (Large) */}
-          <div className="glass-panel col-8" style={{
+          <div className="glass-panel col-8 grid-2" style={{
             padding: '30px',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
             gap: '24px',
             overflow: 'hidden',
             minHeight: '320px',
             background: 'linear-gradient(135deg, rgba(108, 99, 255, 0.1) 0%, rgba(26, 26, 53, 0.4) 100%)'
-          }} className="col-8 bento-sub-grid">
+          }}>
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '16px' }}>
               <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(108, 99, 255, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#6C63FF' }}>
                 <MessageSquare size={20} />
@@ -440,7 +435,7 @@ export default function Landing({ navigate }) {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            background: 'linear-gradient(135deg, rgba(255, 179, 71, 0.1) 0%, rgba(26, 26, 53, 0.4) 100%)'
+            background: 'linear-gradient(135deg, rgba(255, 179, 71, 0.1) 0%, rgba(255, 179, 71, 0.4) 100%)'
           }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(255, 179, 71, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFB347' }}>
@@ -527,11 +522,9 @@ export default function Landing({ navigate }) {
             <p style={{ color: '#A0A0C0' }}>Your personalized study companion up and running in minutes</p>
           </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '40px'
-          }} className="steps-grid-desktop">
+          <div className="grid-3" style={{
+            gap: '30px'
+          }}>
             {[
               { num: '01', title: 'Create Your Profile', desc: 'Tell us your grade, subjects, goals and learning style. Our AI builds your personalised plan in 60 seconds.' },
               { num: '02', title: 'AI Analyses Your Gaps', desc: 'Take a quick diagnostic. AI identifies exactly where you are strong and where you need help most.' },
@@ -607,15 +600,13 @@ export default function Landing({ navigate }) {
         </div>
 
         {/* Tab Content Display */}
-        <div className="glass-panel" style={{
+        <div className="glass-panel grid-split-reverse" style={{
           padding: '40px',
           borderRadius: '24px',
-          display: 'grid',
-          gridTemplateColumns: '1.1fr 1fr',
           gap: '40px',
           alignItems: 'center',
           background: 'rgba(25, 20, 50, 0.2)'
-        }} className="tab-grid-desktop">
+        }}>
           {activeTab === 'tab_doubt' && (
             <>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -779,8 +770,8 @@ export default function Landing({ navigate }) {
       <section id="educators" style={{
         padding: '80px 5vw',
         background: 'rgba(255,255,255,0.01)',
-        borderTop: '1px solid rgba(255,255,255,0.04)',
-        borderBottom: '1px solid rgba(255,255,255,0.04)',
+        borderTop: '1px solid rgba(255, 255, 255, 0.04)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.04)',
         position: 'relative',
         zIndex: 5
       }}>
@@ -824,14 +815,12 @@ export default function Landing({ navigate }) {
           </div>
 
           {/* Role Preview Card */}
-          <div className="glass-panel" style={{
+          <div className="glass-panel grid-split" style={{
             padding: '40px',
             borderRadius: '24px',
-            display: 'grid',
-            gridTemplateColumns: '1fr 1.2fr',
             gap: '40px',
             alignItems: 'center'
-          }} className="role-grid-desktop">
+          }}>
             
             {/* Left explanation */}
             {activeRole === 'student_role' && (
@@ -894,7 +883,7 @@ export default function Landing({ navigate }) {
                     <span style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>🎓 Student Dashboard</span>
                     <span style={{ fontSize: '0.75rem', color: '#00D4AA' }}>🔥 14-Day Streak</span>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px', marginBottom: '16px' }}>
+                  <div className="grid-3" style={{ gap: '10px', marginBottom: '16px' }}>
                     <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
                       <span style={{ fontSize: '0.65rem', color: '#A0A0C0' }}>XP Earned</span>
                       <p style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'white' }}>4,250</p>
@@ -1072,11 +1061,10 @@ export default function Landing({ navigate }) {
             </div>
           </div>
 
-          <div style={{
+          <div className="pricing-grid-desktop" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
             gap: '30px'
-          }} className="pricing-grid-desktop">
+          }}>
             
             {/* Plan 1 */}
             <div className="glass-panel" style={{ padding: '40px 30px', borderRadius: '24px', display: 'flex', flexDirection: 'column', justifyBetween: 'space-between', gap: '30px' }}>
