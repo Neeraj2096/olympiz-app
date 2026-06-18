@@ -330,7 +330,15 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
           </div>
 
           {/* Educator identity */}
-          <div className="dashboard-sidebar">
+          <div style={{
+            background: 'rgba(255,255,255,0.02)',
+            border: '1px solid rgba(255,255,255,0.06)',
+            borderRadius: '16px',
+            padding: '16px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px'
+          }}>
             <div style={{
               width: '36px',
               height: '36px',
@@ -386,7 +394,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
           </nav>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div className="dashboard-sidebar-bottom" style={{ gap: '8px' }}>
           <button 
             onClick={() => navigate('dashboard-student')}
             className="btn btn-primary btn-pill" 
