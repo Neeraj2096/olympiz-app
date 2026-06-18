@@ -402,6 +402,11 @@ button, input, select, textarea {
 .session-insights-sidebar {
   width: 350px;
 }
+.session-insights-workspace {
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 100px);
+}
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
@@ -409,7 +414,24 @@ button, input, select, textarea {
     flex-direction: column;
   }
   .session-insights-sidebar {
-    width: 100%;
+    width: 100% !important;
+  }
+  .session-insights-workspace {
+    max-height: none;
+    overflow-y: visible;
+  }
+  .session-insights-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+  .session-insights-tabs::-webkit-scrollbar {
+    height: 4px;
+  }
+  .session-insights-tabs::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
   }
   .grid-sidebar { grid-template-columns: 1fr !important; }
   .grid-5, .grid-footer { grid-template-columns: repeat(3, 1fr); }

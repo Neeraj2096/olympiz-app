@@ -353,9 +353,9 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
       </div>
 
       {/* Right Panel: Analysis Workspace */}
-      <div className="glass-panel" style={{ flex: 1, padding: '30px', borderRadius: '24px', display: 'flex', flexDirection: 'column', overflowY: 'auto', maxHeight: 'calc(100vh - 100px)' }}>
+      <div className="glass-panel session-insights-workspace" style={{ padding: '30px', borderRadius: '24px', display: 'flex', flexDirection: 'column' }}>
         
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px', marginBottom: '24px' }}>
           <div>
             <h2 style={{ color: 'white', fontSize: '1.4rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
               <Sparkles size={24} color="#00D4AA" /> Session Analysis Engine
@@ -430,7 +430,7 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
           <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
             
             {/* Tabs */}
-            <div style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '24px' }}>
+            <div className="session-insights-tabs" style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.1)', marginBottom: '24px' }}>
                 {[
                   { id: 'diagnosis', icon: <Target size={16}/>, label: 'Student Diagnosis' },
                   { id: 'teacher_feedback', icon: <GraduationCap size={16}/>, label: 'Teacher Feedback' },
@@ -451,9 +451,11 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
-                    fontSize: '0.9rem',
-                    fontWeight: activeTab === tab.id ? 'bold' : 'normal',
-                    transition: 'all 0.2s'
+                    fontSize: '0.85rem',
+                    fontWeight: '600',
+                    transition: 'all 0.2s',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0
                   }}
                 >
                   {tab.icon} {tab.label}
