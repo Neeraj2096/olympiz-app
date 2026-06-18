@@ -74,21 +74,9 @@ export default function StudentDashboard({
     }}>
 
       {/* 1. Left Sidebar */}
-      <aside style={{
-        background: '#070712',
-        borderRight: '1px solid rgba(255,255,255,0.06)',
-        padding: '24px 20px 20px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        height: '100vh',
-        position: 'sticky',
-        top: 0,
-        zIndex: 10,
-        overflow: 'hidden'
-      }}>
+      <aside className="dashboard-sidebar">
         {/* Top brand */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', flex: '1 1 auto', minHeight: 0, overflowY: 'auto', paddingRight: '4px' }}>
+        <div className="dashboard-sidebar-top" style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', paddingRight: '4px' }}>
           <div onClick={() => setSubPage('home')} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
             <div style={{
               background: 'linear-gradient(135deg, #6C63FF 0%, #00D4AA 100%)',
@@ -165,7 +153,7 @@ export default function StudentDashboard({
           )}
 
           {/* Sidebar Nav Items */}
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <nav className="dashboard-nav">
             {[
               { id: 'home', label: 'Home', icon: <Home size={18} /> },
               { id: 'ai-chat', label: 'Ask AI', icon: <MessageSquare size={18} />, badge: 'NEW' },
@@ -181,18 +169,11 @@ export default function StudentDashboard({
                 <div 
                   key={item.id}
                   onClick={() => setSubPage(item.id)}
+                  className="dashboard-nav-item"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '10px 14px',
-                    borderRadius: '10px',
-                    cursor: 'pointer',
                     background: active ? 'rgba(108, 99, 255, 0.1)' : 'transparent',
                     color: active ? 'white' : '#A0A0C0',
                     fontWeight: active ? '600' : '500',
-                    fontSize: '0.9rem',
-                    transition: 'all 0.15s'
                   }}
                   onMouseEnter={e => !active && (e.currentTarget.style.color = 'white')}
                   onMouseLeave={e => !active && (e.currentTarget.style.color = '#A0A0C0')}
@@ -213,7 +194,7 @@ export default function StudentDashboard({
         </div>
 
         {/* Bottom items */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flexShrink: 0, paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+        <div className="dashboard-sidebar-bottom">
           {/* Day Streak Widget */}
           <div style={{
             background: 'rgba(255, 179, 71, 0.05)',
@@ -263,13 +244,8 @@ export default function StudentDashboard({
         </div>
       </aside>
 
-      {/* 2. Main Work Content Pane */}
-      <main style={{
-        padding: '40px 5vw 80px',
-        overflowY: 'auto',
-        height: '100vh',
-        minHeight: 0
-      }}>
+      {/* 2. Main Workspace */}
+      <main className="dashboard-main">
         {/* Header Notification Icon */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px', position: 'relative', zIndex: 100 }}>
           <div style={{ position: 'relative' }}>

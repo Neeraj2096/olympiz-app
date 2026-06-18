@@ -312,18 +312,8 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
     }}>
 
       {/* 1. Left Sidebar */}
-      <aside style={{
-        background: '#070712',
-        borderRight: '1px solid rgba(255,255,255,0.06)',
-        padding: '30px 20px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        height: '100vh',
-        position: 'sticky',
-        top: 0
-      }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <aside className="dashboard-sidebar">
+        <div className="dashboard-sidebar-top">
           <div onClick={() => setSubPage('overview')} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
             <div style={{
               background: 'linear-gradient(135deg, #6C63FF 0%, #00D4AA 100%)',
@@ -340,15 +330,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
           </div>
 
           {/* Educator identity */}
-          <div style={{
-            background: 'rgba(255,255,255,0.02)',
-            border: '1px solid rgba(255,255,255,0.06)',
-            borderRadius: '16px',
-            padding: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px'
-          }}>
+          <div className="dashboard-sidebar">
             <div style={{
               width: '36px',
               height: '36px',
@@ -367,7 +349,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
             </div>
           </div>
 
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <nav className="dashboard-nav">
             {[
               { id: 'overview', label: 'Overview', icon: <Users size={18} /> },
               { id: 'classes', label: 'My Lectures', icon: <Calendar size={18} />, badge: 'LIVE' },
@@ -382,18 +364,11 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
                 <div 
                   key={item.id}
                   onClick={() => setSubPage(item.id)}
+                  className="dashboard-nav-item"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '10px 14px',
-                    borderRadius: '10px',
-                    cursor: 'pointer',
                     background: active ? 'rgba(108, 99, 255, 0.1)' : 'transparent',
                     color: active ? 'white' : '#A0A0C0',
                     fontWeight: active ? '600' : '500',
-                    fontSize: '0.9rem',
-                    transition: 'all 0.15s'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -438,7 +413,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
       </aside>
 
       {/* 2. Main content area */}
-      <main style={{ padding: '40px 5vw 60px', overflowY: 'auto', height: '100vh' }}>
+      <main className="dashboard-main" style={{ overflowY: 'auto', height: '100vh' }}>
         {/* Header Notification Icon */}
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px', position: 'relative', zIndex: 100 }}>
           <div style={{ position: 'relative' }}>
