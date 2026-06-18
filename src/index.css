@@ -453,7 +453,19 @@ button, input, select, textarea {
     gap: 16px;
   }
   .dashboard-sidebar-bottom {
-    display: none;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: none;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .dashboard-sidebar-bottom button {
+    flex: 1;
+    justify-content: center;
+    white-space: nowrap;
+    padding: 8px 12px !important;
   }
   .dashboard-nav {
     flex-direction: row;

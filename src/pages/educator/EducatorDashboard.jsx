@@ -728,7 +728,7 @@ export default function EducatorDashboard({ user, logout, navigate, setSessionDi
             <div className="glass-panel" style={{ padding: '24px', borderRadius: '18px', overflowX: 'auto' }}>
               <h3 style={{ color: 'white', fontSize: '1rem', fontWeight: 'bold', marginBottom: '16px' }}>Assignments status logs</h3>
               
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', whiteSpace: 'nowrap' }}>
                 <thead>
                   <tr style={{ color: '#626280', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '8px', textAlign: 'left' }}>
                     <th style={{ padding: '10px' }}>Assignment Name</th>
