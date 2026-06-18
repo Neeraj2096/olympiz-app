@@ -365,8 +365,8 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
             </p>
           </div>
           
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: statusPill.bg, color: statusPill.color, padding: '8px 16px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '500', border: `1px solid ${statusPill.color}40`, flexShrink: 0 }}>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: statusPill.bg, color: statusPill.color, padding: '8px 16px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: '500', border: `1px solid ${statusPill.color}40` }}>
               {statusPill.icon} {statusPill.label}
             </div>
             {analysisStatus !== 'idle' && (
@@ -390,7 +390,7 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
         {analysisStatus === 'idle' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
             <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px', marginBottom: '12px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                 <span style={{ color: 'white', fontSize: '0.9rem' }}>Or paste transcript manually:</span>
                 <button 
                   onClick={() => setTranscriptInput(mockTranscript)}
@@ -403,7 +403,7 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
                 value={transcriptInput}
                 onChange={e => setTranscriptInput(e.target.value)}
                 placeholder="Paste the teacher-student conversation here..."
-                style={{ flex: 1, minHeight: '200px', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '16px', color: 'white', fontSize: '0.9rem', resize: 'none', outline: 'none', fontFamily: 'monospace' }}
+                style={{ flex: 1, background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', padding: '16px', color: 'white', fontSize: '0.9rem', resize: 'none', outline: 'none', fontFamily: 'monospace' }}
               />
             </div>
             
@@ -464,7 +464,7 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
             </div>
 
             {/* Tab Contents */}
-            <div className="session-insights-tab-content" style={{ flex: 1, overflowY: 'auto', paddingRight: '8px', minHeight: '300px' }}>
+            <div style={{ flex: 1, overflowY: 'auto', paddingRight: '8px' }}>
               
               {/* DIAGNOSIS TAB */}
               {activeTab === 'diagnosis' && (
