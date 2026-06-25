@@ -220,80 +220,11 @@ export default function SmartNotes({ notesList, addNote, deleteNote, earnXP, act
       } else if (action === 'hindi') {
         setNoteContent(prev => prev + `<br/><h3>AI Translation (Hindi):</h3><p>संक्षेप में: निरंतर आयतन का अर्थ है कि कोई प्रसार नहीं होता है, इसलिए शून्य कार्य होता है।</p>`);
       } else if (action === 'flashcard') {
-        // Dynamic offline/preview flashcard extraction from note content
-        const cleanText = (noteContent || '').replace(/<[^>]*>/g, '\n').trim();
-        
-        let extractedCards = [];
-        
-        // 1. Try to parse Saved AI solved doubts: "### AI Solved Doubt" format
-        if (cleanText.includes('### AI Solved Doubt')) {
-          const sections = cleanText.split('###');
-          let doubtText = '';
-          let answerText = '';
-          
-          sections.forEach(sec => {
-            const lines = sec.trim().split('\n');
-            const header = lines[0].trim();
-            const rest = lines.slice(1).join(' ').trim();
-            
-            if (header.includes('AI Solved Doubt')) {
-              doubtText = rest;
-            } else if (header.includes('Step-by-Step Breakdown') && doubtText && !answerText) {
-              // Wait, answer is usually between AI Solved Doubt and Step-by-Step
-            }
-          });
-          
-          // Alternative splitting for exact matching
-          const matchDoubt = cleanText.match(/### AI Solved Doubt\s+([\s\S]*?)(?=###|$)/i);
-          const matchSteps = cleanText.match(/### Step-by-Step Breakdown\s+([\s\S]*?)(?=###|$)/i);
-          
-          if (matchDoubt && matchDoubt[1]) {
-            const rawDoubt = matchDoubt[1].trim();
-            const rawAnswer = matchSteps && matchSteps[1] ? matchSteps[1].trim() : '';
-            
-            const firstSentence = rawAnswer.split(/[.!?]/)[0] || 'View step-by-step breakdown for detail.';
-            extractedCards.push({
-              front: `Saved Doubt: "${rawDoubt.substring(0, 80)}${rawDoubt.length > 80 ? '...' : ''}"`,
-              back: firstSentence.trim() + '.'
-            });
-          }
-        }
-        
-        // 2. Try to parse HTML structure e.g., <h3>...</h3> <p>...</p> pairs
-        if (extractedCards.length === 0) {
-          const headerRegex = /<h3[^>]*>([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
-          let match;
-          while ((match = headerRegex.exec(noteContent || '')) !== null) {
-            const title = match[1].replace(/<[^>]*>/g, '').trim();
-            const desc = match[2].replace(/<[^>]*>/g, '').trim();
-            if (title && desc && title.length < 100) {
-              extractedCards.push({
-                front: `Explain the concept/role of "${title}" in the context of "${noteTitle}"`,
-                back: desc.split(/[.!?]/).slice(0, 2).join('.') + '.'
-              });
-            }
-          }
-        }
-        
-        // 3. Fallback to basic sentence-level summarization
-        if (extractedCards.length === 0) {
-          const plainText = cleanText.replace(/\s+/g, ' ');
-          const sentences = plainText.split(/[.!?]/).map(s => s.trim()).filter(s => s.length > 10);
-          if (sentences.length > 0) {
-            extractedCards.push({
-              front: `What is the main definition or overview statement for "${noteTitle}"?`,
-              back: sentences[0] + '.'
-            });
-          } else {
-            extractedCards.push({
-              front: `What is the core concept of "${noteTitle}"?`,
-              back: cleanText.substring(0, 120) + (cleanText.length > 120 ? '...' : '')
-            });
-          }
-        }
-        
-        setCustomFlashcards(prev => [...prev, ...extractedCards]);
-        alert(`🎉 Generated ${extractedCards.length} flashcard(s) directly from the saved note content!`);
+        setCustomFlashcards(prev => [
+          ...prev,
+          { front: `What is the core concept of "${noteTitle}"?`, back: "Extracting key learning parameters and formula relationships from notes." }
+        ]);
+        alert("Generated a conceptual flashcard based on this note title!");
       } else if (action === 'quiz') {
         const mockQuiz = {
           questions: [
@@ -335,7 +266,15 @@ export default function SmartNotes({ notesList, addNote, deleteNote, earnXP, act
           model: "gemini-1.5-flash",
           generationConfig: { responseMimeType: "application/json" }
         });
-        const cleanContent = noteContent.replace(/### AI Solved Doubt/gi, '').replace(/### Step-by-Step Breakdown/gi, '').trim();
+        
+        // Strip HTML tags so the model receives clean plain text
+        const cleanContent = noteContent
+          .replace(/<[^>]*>?/gm, ' ')
+          .replace(/AI Solved Doubt/gi, '')
+          .replace(/Step-by-Step Breakdown/gi, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+
         const prompt = `Analyze the following educational content and generate exactly 3 revision flashcards.
         STRICT RULES:
         1. "front": MUST be a simple, ONE-LINER direct question about the factual subject matter.
@@ -354,9 +293,17 @@ export default function SmartNotes({ notesList, addNote, deleteNote, earnXP, act
         let text = result.response.text();
         text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
         const flashcards = JSON.parse(text);
-        setCustomFlashcards(prev => [...prev, ...flashcards]);
+        
+        // Defensive key mapping to ensure front/back are always populated
+        const rawDeck = Array.isArray(flashcards) ? flashcards : (flashcards.flashcards || []);
+        const sanitizedCards = rawDeck.map(card => ({
+          front: card.front || card.question || `Concept question about ${noteTitle}`,
+          back: card.back || card.answer || "Review note details for full answer."
+        }));
+
+        setCustomFlashcards(prev => [...prev, ...sanitizedCards]);
         earnXP(20);
-        alert(`🎉 AI successfully generated ${flashcards.length} custom flashcards and added them to your Review Deck!`);
+        alert(`🎉 AI successfully generated ${sanitizedCards.length} custom flashcards and added them to your Review Deck!`);
       }
       else if (action === 'quiz') {
         const jsonModel = genAI.getGenerativeModel({
