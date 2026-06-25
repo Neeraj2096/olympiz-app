@@ -15,14 +15,21 @@ import 'katex/dist/katex.min.css';
 const preprocessLaTeX = (text) => {
   if (!text) return '';
   let processed = text;
+  
+  // Normalize double backslashes to single backslashes
+  processed = processed.replace(/\\\\/g, '\\');
+  
   // Convert LaTeX math delimiters to Markdown math delimiters ($ and $$)
-  // because ReactMarkdown treats \( as an escaped parenthesis.
-  processed = processed.replace(/\\\((.*?)\\\)/g, '$$$1$$');
-  processed = processed.replace(/\\\[(.*?)\\\]/gs, '$$$$$1$$$$');
+  // using function replacement to avoid group replacement syntax quirks in JS
+  processed = processed.replace(/\\\((.*?)\\\)/g, (match, p1) => '$' + p1 + '$');
+  processed = processed.replace(/\\\[([\s\S]*?)\\\]/g, (match, p1) => '$$\n' + p1 + '\n$$');
+  
   // Ensure align blocks are wrapped in block math if they are bare
-  processed = processed.replace(/(?<!\$)\\begin{align\*?}([\s\S]*?)\\end{align\*?}(?!\$)/g, '$$$$ \\begin{aligned}$1\\end{aligned} $$$$');
+  processed = processed.replace(/(?<!\$)\\begin{align\*?}([\s\S]*?)\\end{align\*?}(?!\$)/g, (match, p1) => '$$\n\\begin{aligned}' + p1 + '\\end{aligned}\n$$');
+  
   // Ensure array and matrix blocks are wrapped in block math if they are bare
-  processed = processed.replace(/(?<!\$)\\begin{(array|pmatrix|bmatrix|Bmatrix|vmatrix|Vmatrix|matrix|cases|equation\*?)}([\s\S]*?)\\end{\1}(?!\$)/g, '$$$$ \\begin{$1}$2\\end{$1} $$$$');
+  processed = processed.replace(/(?<!\$)\\begin{(array|pmatrix|bmatrix|Bmatrix|vmatrix|Vmatrix|matrix|cases|equation\*?)}([\s\S]*?)\\end{\1}(?!\$)/g, (match, p1, p2) => '$$\n\\begin{' + p1 + '}' + p2 + '\\end{' + p1 + '}\n$$');
+  
   // Fix missing slashes from parsed JSON
   processed = processed.replace(/ quad /g, ' \\quad ');
   processed = processed.replace(/ ext{/g, ' \\text{');
@@ -262,10 +269,52 @@ export default function AskAI({ user, addNote, earnXP, activeCourse = 'JEE Main'
     };
   };
 
-  // ... (simulatedAnswers object remains unchanged)
+  const simulatedAnswers = {
+    thermodynamics: {
+      English: {
+        text: "The First Law of Thermodynamics states that energy cannot be created or destroyed, only transformed:\n\n$$dU = dQ - dW$$\n\nWhere:\n- $$dU$$ is the change in internal energy of the system\n- $$dQ$$ is the heat supplied to the system\n- $$dW$$ is the work done by the system.",
+        stepByStep: "1. Identify variables: heat added ($$dQ$$), work done ($$dW$$).\n2. Write the formula: $$dU = dQ - dW$$.\n3. Substitute values to solve for change in internal energy ($$dU$$).",
+        conceptLinks: ["Internal Energy", "Enthalpy", "First Law of Thermodynamics"]
+      }
+    },
+    newton: {
+      English: {
+        text: "Newton's Third Law of Motion states that for every action, there is an equal and opposite reaction:\n\n$$\\vec{F}_{AB} = -\\vec{F}_{BA}$$\n\nIf object A exerts a force on object B, object B simultaneously exerts an equal and opposite force on object A.",
+        stepByStep: "1. Normal force: A book on a table pushes down with force $$F_g$$.\n2. Reaction: The table pushes back up with normal force $$N = -F_g$$.\n3. Result: Dynamic equilibrium.",
+        conceptLinks: ["Newton's Laws", "Action-Reaction Pairs", "Free Body Diagrams"]
+      }
+    },
+    sn1sn2: {
+      English: {
+        text: "Nucleophilic substitution mechanisms:\n\n- **$S_N1$ (Substitution Nucleophilic Unimolecular)**: Two-step mechanism via a carbocation intermediate. Rate depends only on substrate concentration:\n\n$$\\text{Rate} = k[R-X]$$\n\n- **$S_N2$ (Substitution Nucleophilic Bimolecular)**: One-step concerted mechanism with backside attack causing Walden inversion. Rate depends on both substrate and nucleophile:\n\n$$\\text{Rate} = k[R-X][Nu^-]$$",
+        stepByStep: "1. $S_N1$: Substrate ionizes to form a stable carbocation (slow step). Nucleophile attacks the carbocation (fast step).\n2. $S_N2$: Nucleophile attacks the opposite side of leaving group, forming a transition state. Leaving group departs simultaneously.",
+        conceptLinks: ["SN1 Mechanism", "SN2 Mechanism", "Stereochemical Inversion"]
+      }
+    },
+    limit: {
+      English: {
+        text: "The limit of $$\\frac{\\sin x}{x}$$ as $$x \\to 0$$ is a fundamental limit in calculus:\n\n$$\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$$\n\n**Squeeze Theorem Proof**:\nFor any angle $$x$$ in the range $$-\\frac{\\pi}{2} < x < \\frac{\\pi}{2}$$, we have:\n\n$$\\cos x < \\frac{\\sin x}{x} < 1$$\n\nSince $$\\lim_{x \\to 0} \\cos x = 1$$ and $$\\lim_{x \\to 0} 1 = 1$$, by the Squeeze Theorem we get $$\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$$.",
+        stepByStep: "1. Establish inequality: $$\\cos x < \\frac{\\sin x}{x} < 1$$\n2. Take limit of outside functions: $$\\lim_{x \\to 0} \\cos x = 1$$ and $$\\lim_{x \\to 0} 1 = 1$$\n3. Apply Squeeze Theorem to conclude middle function limit is 1.",
+        conceptLinks: ["Squeeze Theorem", "Limits in Calculus", "Trigonometric Limits"]
+      }
+    },
+    latex: {
+      English: {
+        text: "Here are some mathematical formula syntax examples in LaTeX:\n\n- **Fractions**: $$\\frac{a}{b}$$\n- **Subscripts and Superscripts**: $$x_i^2 + y_j^3 = z$$\n- **Integrals**: $$\\int_{a}^{b} f(x)\\,dx = F(b) - F(a)$$\n- **Summation**: $$\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}$$\n- **Matrices**:\n$$\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$$",
+        stepByStep: "1. Inline math uses standard single dollar signs: `$ E=mc^2 $`.\n2. Block math uses double dollar signs: `$$ \\lim_{x \\to 0} f(x) $$`.\n3. Make sure all backslashes are escaped properly in JSON if calling APIs.",
+        conceptLinks: ["LaTeX Syntax", "KaTeX Rules", "Math Formatting"]
+      }
+    },
+    photosynthesis: {
+      English: {
+        text: "Photosynthesis is the chemical process by which green plants utilize solar energy to synthesize glucose from carbon dioxide and water:\n\n$$6CO_2 + 6H_2O \\xrightarrow{\\text{light}} C_6H_{12}O_6 + 6O_2$$\n\nIt consists of two phases:\n1. **Light Reaction**: Occurs in thylakoid membranes, generating $$ATP$$ and $$NADPH$$.\n2. **Dark Reaction (Calvin Cycle)**: Occurs in the stroma, where $$CO_2$$ is fixed into glucose using the $$ATP$$ and $$NADPH$$ via the RuBisCO enzyme.",
+        stepByStep: "1. Light absorption: Chlorophyll absorbs photons, exciting electrons.\n2. Photolysis of water: Water splits into oxygen, protons, and electrons ($$2H_2O \\to 4H^+ + 4e^- + O_2$$).\n3. Electron Transport Chain: Generates proton gradient to synthesize ATP and NADPH.\n4. Calvin Cycle: RuBisCO catalyzes fixation of $$CO_2$$ to synthesize Glyceraldehyde 3-phosphate (G3P).",
+        conceptLinks: ["Calvin Cycle", "Light Reactions", "RuBisCO Activity"]
+      }
+    }
+  };
 
   const getAnswer = (text, lang) => {
-    // ... (rest of logic)
     const lower = text.toLowerCase().trim();
     // 1. Check for predefined database matches
     let topic = null;
@@ -473,14 +522,17 @@ You MUST respond strictly in the following JSON format:
 
         // LLMs frequently forget to double-escape LaTeX commands that match JSON control characters.
         // We must escape \b (begin, beta), \f (frac), \r (right, rho), \t (text, theta) before parsing.
+        // Clean control characters and escape LaTeX backslashes safely so JSON.parse won't throw
         let safeResult = result
           .replace(/```json/gi, '')
           .replace(/```/g, '')
           .trim()
-          .replace(/(?<!\\)\\b/g, '\\\\b')
-          .replace(/(?<!\\)\\f/g, '\\\\f')
-          .replace(/(?<!\\)\\r/g, '\\\\r')
-          .replace(/(?<!\\)\\t/g, '\\\\t');
+          // Specific LaTeX commands starting with n that should be escaped
+          .replace(/\\(nu|neq|nabla|nsubseteq|nexists|ni|nbar)/g, '\\\\$1')
+          // LaTeX commands starting with b, f, r, t, u (like \begin, \frac, \right, \theta, \upsilon)
+          .replace(/\\([bfrtu][a-zA-Z]+)/g, '\\\\$1')
+          // All other backslashes that are not valid JSON escapes
+          .replace(/\\(?![\\"/bfnrtu])/g, '\\\\');
 
         const responseData = JSON.parse(safeResult);
 
