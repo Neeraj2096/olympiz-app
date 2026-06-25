@@ -13,19 +13,27 @@ import 'katex/dist/katex.min.css';
 const preprocessLaTeX = (text) => {
   if (!text) return '';
   let processed = text;
+  
+  // Normalize double backslashes to single backslashes
+  processed = processed.replace(/\\\\/g, '\\');
+  
   // Convert LaTeX math delimiters to Markdown math delimiters ($ and $$)
-  processed = processed.replace(/\\\((.*?)\\\)/g, '$$$1$$');
-  processed = processed.replace(/\\\[(.*?)\\\]/gs, '$$$$$1$$$$');
+  processed = processed.replace(/\\\((.*?)\\\)/g, (match, p1) => '$' + p1 + '$');
+  processed = processed.replace(/\\\[([\s\S]*?)\\\]/g, (match, p1) => '$$\n' + p1 + '\n$$');
+  
   // Ensure align blocks are wrapped in block math if they are bare
-  processed = processed.replace(/(?<!\$)\\begin{align\*?}([\s\S]*?)\\end{align\*?}(?!\$)/g, '$$$$ \\begin{aligned}$1\\end{aligned} $$$$');
+  processed = processed.replace(/(?<!\$)\\begin{align\*?}([\s\S]*?)\\end{align\*?}(?!\$)/g, (match, p1) => '$$\n\\begin{aligned}' + p1 + '\\end{aligned}\n$$');
+  
   // Ensure array and matrix blocks are wrapped in block math if they are bare
-  processed = processed.replace(/(?<!\$)\\begin{(array|pmatrix|bmatrix|Bmatrix|vmatrix|Vmatrix|matrix|cases|equation\*?)}([\s\S]*?)\\end{\1}(?!\$)/g, '$$$$ \\begin{$1}$2\\end{$1} $$$$');
+  processed = processed.replace(/(?<!\$)\\begin{(array|pmatrix|bmatrix|Bmatrix|vmatrix|Vmatrix|matrix|cases|equation\*?)}([\s\S]*?)\\end{\1}(?!\$)/g, (match, p1, p2) => '$$\n\\begin{' + p1 + '}' + p2 + '\\end{' + p1 + '}\n$$');
+  
   // Fix missing slashes from parsed JSON
   processed = processed.replace(/ quad /g, ' \\quad ');
   processed = processed.replace(/ ext{/g, ' \\text{');
   processed = processed.replace(/ cdot /g, ' \\cdot ');
   processed = processed.replace(/ mu /g, ' \\mu ');
   processed = processed.replace(/ mucdot/g, ' \\mu\\cdot');
+  
   // Fix literal \n that might have survived
   processed = processed.replace(/\\n/g, '\n');
   return processed;
@@ -168,13 +176,17 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
       const result = completion.choices[0]?.message?.content;
       if (!result) throw new Error("No result from Groq");
 
-      // Sanitize the JSON string to fix single-escaped LaTeX commands that break JSON.parse
-      // We skip n, r, and u so we don't break newlines, carriage returns, or unicode escapes.
+      // Clean control characters and escape LaTeX backslashes safely so JSON.parse won't throw
       const safeResult = result
         .replace(/```json/gi, '')
         .replace(/```/g, '')
         .trim()
-        .replace(/(?<!\\)\\(?=[a-mo-qs-tv-zA-Z])/g, '\\\\');
+        // Specific LaTeX commands starting with n that should be escaped
+        .replace(/\\(nu|neq|nabla|nsubseteq|nexists|ni|nbar)/g, '\\\\$1')
+        // LaTeX commands starting with b, f, r, t, u (like \begin, \frac, \right, \theta, \upsilon)
+        .replace(/\\([bfrtu][a-zA-Z]+)/g, '\\\\$1')
+        // All other backslashes that are not valid JSON escapes
+        .replace(/\\(?![\\"/bfnrtu])/g, '\\\\');
 
       const responseData = JSON.parse(safeResult);
       setAnalysisData(responseData);
