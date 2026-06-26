@@ -188,11 +188,11 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
         .replace(/```/g, '')
         .trim()
         // Specific LaTeX commands starting with n that should be escaped
-        .replace(/\\(nu|neq|nabla|nsubseteq|nexists|ni|nbar)/g, '\\\\$1')
+        .replace(/(?<!\\)\\(nu|neq|nabla|nsubseteq|nexists|ni|nbar)/g, '\\\\$1')
         // LaTeX commands starting with b, f, r, t, u (like \begin, \frac, \right, \theta, \upsilon)
-        .replace(/\\([bfrtu][a-zA-Z]+)/g, '\\\\$1')
+        .replace(/(?<!\\)\\([bfrtu][a-zA-Z]+)/g, '\\\\$1')
         // All other backslashes that are not valid JSON escapes
-        .replace(/\\(?![\\"/bfnrtu])/g, '\\\\');
+        .replace(/(?<!\\)\\(?![\\"/bfnrtu])/g, '\\\\');
 
       const responseData = JSON.parse(safeResult);
       setAnalysisData(responseData);
