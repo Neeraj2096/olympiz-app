@@ -123,7 +123,13 @@ Teacher: Excellent. Never forget that friction opposes the motion and relies on 
 
     try {
       const groq = new Groq({ apiKey, dangerouslyAllowBrowser: true });
-      const targetText = transcriptInput || "No transcript provided.";
+      let targetText = transcriptInput;
+      if (!targetText && selectedSession) {
+        targetText = selectedSession.id === 1 ? mockTranscript : selectedSession.transcript_snippet;
+      }
+      if (!targetText) {
+        targetText = "No transcript provided.";
+      }
       
       const prompt = `You are an expert pedagogical AI analyzing a teacher-student session transcript.
 Analyze the following transcript:
