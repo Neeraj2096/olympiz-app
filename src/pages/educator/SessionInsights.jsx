@@ -599,7 +599,14 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                         {analysisData.concept_card.practice_questions.map((q) => (
                           <div key={q.id} style={{ background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '12px' }}>
-                            <p style={{ color: 'white', fontSize: '0.9rem', marginBottom: '12px' }}>{q.q}</p>
+                            <div style={{ color: 'white', fontSize: '0.9rem', marginBottom: '12px' }}>
+                              <ReactMarkdown
+                                remarkPlugins={[remarkMath]}
+                                rehypePlugins={[rehypeKatex]}
+                              >
+                                {preprocessLaTeX(q.q)}
+                              </ReactMarkdown>
+                            </div>
                             
                             {practiceAnswersVisible[q.id] ? (
                               <div style={{ background: 'rgba(0,212,170,0.1)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid #00D4AA', marginTop: '8px' }}>
