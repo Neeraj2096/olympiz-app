@@ -11,6 +11,36 @@ import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import 'katex/dist/katex.min.css';
+
+const preprocessLaTeX = (text) => {
+  if (!text) return '';
+  let processed = text;
+  
+  // Normalize double backslashes to single backslashes
+  processed = processed.replace(/\\\\/g, '\\');
+  
+  // Convert LaTeX math delimiters to Markdown math delimiters ($ and $$)
+  processed = processed.replace(/\\\((.*?)\\\)/g, (match, p1) => '$' + p1 + '$');
+  processed = processed.replace(/\\\[([\s\S]*?)\\\]/g, (match, p1) => '$$\n' + p1 + '\n$$');
+  
+  // Ensure align blocks are wrapped in block math if they are bare
+  processed = processed.replace(/(?<!\$)\\begin{align\*?}([\s\S]*?)\\end{align\*?}(?!\$)/g, (match, p1) => '$$\n\\begin{aligned}' + p1 + '\\end{aligned}\n$$');
+  
+  // Ensure array and matrix blocks are wrapped in block math if they are bare
+  processed = processed.replace(/(?<!\$)\\begin{(array|pmatrix|bmatrix|Bmatrix|vmatrix|Vmatrix|matrix|cases|equation\*?)}([\s\S]*?)\\end{\1}(?!\$)/g, (match, p1, p2) => '$$\n\\begin{' + p1 + '}' + p2 + '\\end{' + p1 + '}\n$$');
+  
+  // Fix missing slashes from parsed JSON
+  processed = processed.replace(/ quad /g, ' \\quad ');
+  processed = processed.replace(/ ext{/g, ' \\text{');
+  processed = processed.replace(/ cdot /g, ' \\cdot ');
+  processed = processed.replace(/ mu /g, ' \\mu ');
+  processed = processed.replace(/ mucdot/g, ' \\mu\\cdot');
+  
+  // Fix literal \n that might have survived
+  processed = processed.replace(/\\n/g, '\n');
+  return processed;
+};
+
 export default function SmartNotes({ notesList, addNote, deleteNote, earnXP, activeCourse = 'JEE Main' }) {
   const [activeTab, setActiveTab] = useState('list'); // 'list' | 'editor' | 'flashcards' | 'transcribe'
   const [selectedNote, setSelectedNote] = useState(null);
@@ -690,7 +720,12 @@ export default function SmartNotes({ notesList, addNote, deleteNote, earnXP, act
                       <div style={{ marginBottom: '10px' }}>
                         <h4 style={{ color: '#A0A0C0', fontSize: '0.95rem', marginBottom: '12px' }}>Formula Breakdown</h4>
                         <div style={{ background: 'rgba(0,0,0,0.3)', padding: '16px', borderRadius: '12px', textAlign: 'center', marginBottom: '12px' }}>
-                          <span style={{ color: 'white', fontSize: '1.4rem', fontFamily: 'monospace' }}>{selectedNote.fullData.formula_breakdown.expression}</span>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkMath]}
+                            rehypePlugins={[rehypeKatex]}
+                          >
+                            {`$$\n${preprocessLaTeX(selectedNote.fullData.formula_breakdown.expression).replace(/\$/g, '')}\n$$`}
+                          </ReactMarkdown>
                         </div>
                         <p style={{ color: '#E0E0E0', fontSize: '0.95rem', marginBottom: '16px', textAlign: 'center', fontStyle: 'italic' }}>"{selectedNote.fullData.formula_breakdown.plain_english}"</p>
                         
@@ -699,7 +734,14 @@ export default function SmartNotes({ notesList, addNote, deleteNote, earnXP, act
                             <tbody>
                               {selectedNote.fullData.formula_breakdown.variables.map((v, i) => (
                                 <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                  <td style={{ padding: '10px', color: '#00D4AA', fontWeight: 'bold' }}>{v.symbol}</td>
+                                  <td style={{ padding: '10px', color: '#00D4AA', fontWeight: 'bold' }}>
+                                    <ReactMarkdown
+                                      remarkPlugins={[remarkMath]}
+                                      rehypePlugins={[rehypeKatex]}
+                                    >
+                                      {`$${preprocessLaTeX(v.symbol).replace(/\$/g, '')}$`}
+                                    </ReactMarkdown>
+                                  </td>
                                   <td style={{ padding: '10px', color: 'white' }}>{v.name}</td>
                                   <td style={{ padding: '10px', color: '#A0A0C0' }}>{v.meaning}</td>
                                 </tr>
@@ -719,11 +761,25 @@ export default function SmartNotes({ notesList, addNote, deleteNote, earnXP, act
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                           {selectedNote.fullData.practice_questions.map((q) => (
                             <div key={q.id} style={{ background: 'rgba(255,255,255,0.05)', padding: '20px', borderRadius: '12px' }}>
-                              <p style={{ color: 'white', fontSize: '0.95rem', marginBottom: '16px', lineHeight: '1.5' }}>{q.q}</p>
+                              <div style={{ color: 'white', fontSize: '0.95rem', marginBottom: '16px', lineHeight: '1.5' }}>
+                                <ReactMarkdown
+                                  remarkPlugins={[remarkMath, remarkGfm]}
+                                  rehypePlugins={[rehypeKatex]}
+                                >
+                                  {preprocessLaTeX(q.q)}
+                                </ReactMarkdown>
+                              </div>
                               
                               {practiceAnswersVisible[q.id] ? (
                                 <div style={{ background: 'rgba(0,212,170,0.05)', padding: '16px', borderRadius: '8px', borderLeft: '3px solid #00D4AA', marginTop: '12px' }}>
-                                  <p style={{ color: '#E0E0E0', fontSize: '0.95rem', lineHeight: '1.5' }}>{q.a}</p>
+                                  <div style={{ color: '#E0E0E0', fontSize: '0.95rem', lineHeight: '1.5' }}>
+                                    <ReactMarkdown
+                                      remarkPlugins={[remarkMath, remarkGfm]}
+                                      rehypePlugins={[rehypeKatex]}
+                                    >
+                                      {preprocessLaTeX(q.a)}
+                                    </ReactMarkdown>
+                                  </div>
                                   <button onClick={() => togglePracticeAnswer(q.id)} className="btn btn-outline" style={{ padding: '6px 12px', fontSize: '0.8rem', borderRadius: '6px', marginTop: '12px' }}>Hide Answer</button>
                                 </div>
                               ) : (
