@@ -564,7 +564,7 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
                           remarkPlugins={[remarkMath]}
                           rehypePlugins={[rehypeKatex]}
                         >
-                          {`$$ ${preprocessLaTeX(analysisData.concept_card.formula_breakdown.expression).replace(/\$/g, '')} $$`}
+                          {`$$\n${preprocessLaTeX(analysisData.concept_card.formula_breakdown.expression).replace(/\$/g, '')}\n$$`}
                         </ReactMarkdown>
                       </div>
                       <p style={{ color: '#E0E0E0', fontSize: '0.9rem', marginBottom: '12px', textAlign: 'center' }}>"{analysisData.concept_card.formula_breakdown.plain_english}"</p>
