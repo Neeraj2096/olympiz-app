@@ -495,8 +495,30 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
                         <div style={{ background: 'rgba(0,0,0,0.2)', padding: '10px', borderRadius: '8px', border: '1px dashed rgba(255,255,255,0.1)', marginBottom: '12px', fontSize: '0.85rem' }}>
                           <span style={{ color: '#A0A0C0' }}>Evidence from transcript: </span><span style={{ color: 'white', fontStyle: 'italic' }}>"{gap.evidence}"</span>
                         </div>
-                        <p style={{ color: '#E0E0E0', fontSize: '0.9rem', marginBottom: '8px' }}><strong>Why it matters:</strong> {gap.why_it_matters}</p>
-                        <p style={{ color: '#00D4AA', fontSize: '0.9rem' }}><strong>Correction:</strong> {gap.correction}</p>
+                        <div style={{ color: '#E0E0E0', fontSize: '0.9rem', marginBottom: '8px' }}>
+                          <strong>Why it matters:</strong>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkMath]}
+                            rehypePlugins={[rehypeKatex]}
+                            components={{
+                              p: ({node, ...props}) => <span style={{ marginLeft: '4px' }} {...props} />
+                            }}
+                          >
+                            {preprocessLaTeX(gap.why_it_matters)}
+                          </ReactMarkdown>
+                        </div>
+                        <div style={{ color: '#00D4AA', fontSize: '0.9rem' }}>
+                          <strong>Correction:</strong>
+                          <ReactMarkdown
+                            remarkPlugins={[remarkMath]}
+                            rehypePlugins={[rehypeKatex]}
+                            components={{
+                              p: ({node, ...props}) => <span style={{ marginLeft: '4px' }} {...props} />
+                            }}
+                          >
+                            {preprocessLaTeX(gap.correction)}
+                          </ReactMarkdown>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -519,17 +541,38 @@ CRITICAL: You MUST double-escape all LaTeX backslashes in your JSON output (e.g.
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
                     <div style={{ background: 'rgba(0,212,170,0.05)', border: '1px solid rgba(0,212,170,0.2)', borderRadius: '12px', padding: '20px' }}>
                       <h4 style={{ color: '#00D4AA', fontSize: '1rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}><CheckCircle size={18}/> What went well</h4>
-                      <p style={{ color: 'white', fontSize: '0.9rem', lineHeight: '1.5' }}>{analysisData.teacher_feedback.did_well}</p>
+                      <div style={{ color: 'white', fontSize: '0.9rem', lineHeight: '1.5' }}>
+                        <ReactMarkdown
+                          remarkPlugins={[remarkMath]}
+                          rehypePlugins={[rehypeKatex]}
+                        >
+                          {preprocessLaTeX(analysisData.teacher_feedback.did_well)}
+                        </ReactMarkdown>
+                      </div>
                     </div>
                     
                     <div style={{ background: 'rgba(255,179,71,0.05)', border: '1px solid rgba(255,179,71,0.2)', borderRadius: '12px', padding: '20px' }}>
                       <h4 style={{ color: '#FFB347', fontSize: '1rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}><TrendingUp size={18}/> What could improve</h4>
-                      <p style={{ color: 'white', fontSize: '0.9rem', lineHeight: '1.5' }}>{analysisData.teacher_feedback.could_improve}</p>
+                      <div style={{ color: 'white', fontSize: '0.9rem', lineHeight: '1.5' }}>
+                        <ReactMarkdown
+                          remarkPlugins={[remarkMath]}
+                          rehypePlugins={[rehypeKatex]}
+                        >
+                          {preprocessLaTeX(analysisData.teacher_feedback.could_improve)}
+                        </ReactMarkdown>
+                      </div>
                     </div>
 
                     <div style={{ background: 'rgba(108,99,255,0.05)', border: '1px solid rgba(108,99,255,0.2)', borderRadius: '12px', padding: '20px' }}>
                       <h4 style={{ color: '#6C63FF', fontSize: '1rem', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}><Brain size={18}/> A more effective explanation</h4>
-                      <p style={{ color: 'white', fontSize: '0.9rem', lineHeight: '1.5' }}>{analysisData.teacher_feedback.better_explanation}</p>
+                      <div style={{ color: 'white', fontSize: '0.9rem', lineHeight: '1.5' }}>
+                        <ReactMarkdown
+                          remarkPlugins={[remarkMath]}
+                          rehypePlugins={[rehypeKatex]}
+                        >
+                          {preprocessLaTeX(analysisData.teacher_feedback.better_explanation)}
+                        </ReactMarkdown>
+                      </div>
                     </div>
                   </div>
 
